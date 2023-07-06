@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '35432:5432'
+  trdev_app:
+    container_name: trdev_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+      - trdev_redis
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app/
+      - /app/node_modules
+    restart: 'unless-stopped'
+  redis:
+    container_name: trdev_redis
+    image: redis:alpine
+    # add the custom conf file to use and add a custom password
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - '7202:6379'
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf

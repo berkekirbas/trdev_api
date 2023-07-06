@@ -1,0 +1,502 @@
+{
+	"info": {
+		"_postman_id": "195e8449-9a45-47b5-b4f2-00ebb41d9650",
+		"name": "TRDEV RT API",
+		"description": "**TEST ETMEK İÇİN:**\n\n.env.example dosyasını .env.development.local ile değiştirip sizin bilgilere göre düzenleyin.\n\nsecret keyler için generateSecretKey.js dosyası ile secret key oluşturabilirsiniz.\n\neğer mail vb. sistemleri test etmek istiyorsanız ve kullanıcı kaydı vs. mailtrap.io ya girip bir hesap açın ve smtp bilgilerini env file da düzenleyin.\n\neğer /auth/verify/email/:token ya da /auth/reset/password/change/:token endpointlerini test etmek isterseniz :token kısımlarına lütfen signup sırasında aldığınız kodu ya da resend ile aldığınız kodu yazın\n\nSites Route larını test etmek istiyorsanız lütfen bir hesap açıp authenticate olup deneyiniz.\n\ngelen mailler mailtrap.io daki panelinizdeki inbox ta olacaktır.\n\n**Auth Type seçilmedi Çünkü sistemimiz şöyle işliyor. Kullanıcı giriş yapınca acces token cookie ye kaydediliyor refresh token cliente verilip local storage e kaydediliyor. eğer access token süresi biterse client ten refresh token sayesinde access token ve refresh token yenileniyor.**",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "/auth/signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test@test.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test123456",
+									"type": "text"
+								},
+								{
+									"key": "passwordConfirm",
+									"value": "test123456",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Test",
+									"type": "text"
+								},
+								{
+									"key": "surname",
+									"value": "Test User",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/auth/signup",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						},
+						"description": "User Registration\n\nLütfen Ana açıklamayı okuyun"
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test@test.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "test123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/auth/login",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "User Login"
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/auth/logout",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logout in the system"
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/auth/refresh",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						},
+						"description": "Refresh Token Test Etmek İçin Lütfen Headers Kısmına x-refresh-token olarak ekleyin.\n\nBir sıkıntısı var mı tekrar test edilmesi önerilir."
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/verify/email/:token",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/auth/verify/email/:token",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"auth",
+								"verify",
+								"email",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": null
+								}
+							]
+						},
+						"description": "Lütfen Ana açıklamayı okuyun"
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/verify/email/resend",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test@test.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/auth/verify/email/resend",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"auth",
+								"verify",
+								"email",
+								"resend"
+							]
+						},
+						"description": "Ulaşmayan mail ya da süresi geçen mail için"
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/reset/password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test@test.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/auth/reset/password",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"auth",
+								"reset",
+								"password"
+							]
+						},
+						"description": "şifremi unuttum kısmı için mail gönderme"
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/reset/password/change/:token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "newPassword",
+									"value": "test123",
+									"type": "text"
+								},
+								{
+									"key": "newPasswordConfirm",
+									"value": "test123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/auth/reset/password/change/:token",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"auth",
+								"reset",
+								"password",
+								"change",
+								":token"
+							],
+							"variable": [
+								{
+									"key": "token",
+									"value": null
+								}
+							]
+						},
+						"description": "lütfen sonuna /:token - mailde gelen tokeni ekleyiniz ve öyle deneyiniz."
+					},
+					"response": []
+				},
+				{
+					"name": "/auth/reset/password/resend",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "test@test.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/auth/reset/password/resend",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"auth",
+								"reset",
+								"password",
+								"resend"
+							]
+						},
+						"description": "eğer ulaşmaz ise bu endpoint ile yeni bir mail gönderebilirsiniz."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sites",
+			"item": [
+				{
+					"name": "/sites",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/sites",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"sites"
+							]
+						},
+						"description": "oluşturduğunuz tüm siteleri döndürür."
+					},
+					"response": []
+				},
+				{
+					"name": "/sites/create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "siteName",
+									"value": "Syrup Design",
+									"type": "text"
+								},
+								{
+									"key": "siteUrl",
+									"value": "syrupdesign.com",
+									"type": "text"
+								},
+								{
+									"key": "siteDescription",
+									"value": "Syrup Design Site",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/sites/create",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"sites",
+								"create"
+							]
+						},
+						"description": "yeni site oluşturur."
+					},
+					"response": []
+				},
+				{
+					"name": "/sites/:siteId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/sites/:siteId",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"sites",
+								":siteId"
+							],
+							"variable": [
+								{
+									"key": "siteId",
+									"value": null
+								}
+							]
+						},
+						"description": "spesifik site id si ile o sitenin bilgilerini döndürür."
+					},
+					"response": []
+				},
+				{
+					"name": "/sites/update/:siteId",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "siteName",
+									"value": "Syrup Design New Value",
+									"type": "text"
+								},
+								{
+									"key": "siteUrl",
+									"value": "syrupdesign2.com",
+									"type": "text"
+								},
+								{
+									"key": "siteDescription",
+									"value": "Syrup Design Professional",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{APP_URL}}/sites/update/:siteId",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"sites",
+								"update",
+								":siteId"
+							],
+							"variable": [
+								{
+									"key": "siteId",
+									"value": null
+								}
+							]
+						},
+						"description": "site bilgilerinde değişiklik yapılmasını sağlar."
+					},
+					"response": []
+				},
+				{
+					"name": "/sites/delete/:siteId",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{APP_URL}}/sites/delete/:siteId",
+							"host": [
+								"{{APP_URL}}"
+							],
+							"path": [
+								"sites",
+								"delete",
+								":siteId"
+							],
+							"variable": [
+								{
+									"key": "siteId",
+									"value": null
+								}
+							]
+						},
+						"description": "id si verilen siteyi siler."
+					},
+					"response": []
+				}
+			],
+			"description": "Giriş yapmadan kullanamazsınız.\n\n:siteId kısımları için oluşturduğunuz sitenin id sini girin. url dede değiştirin"
+		},
+		{
+			"name": "/",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000"
+				},
+				"description": "Base"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "APP_URL",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
